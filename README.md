@@ -10,3 +10,19 @@ To run tests, run the following command
 ```bash
   npm run dev
 ```
+# Public Portal/file Server
+## setup
+Install expressjs
+
+step 1
+```bash
+  npm init
+```
+step 2
+```bash
+  npm install express
+```
+##Running Test
+```bash
+  node app.js
+```
