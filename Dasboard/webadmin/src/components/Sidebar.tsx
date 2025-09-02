@@ -26,6 +26,7 @@
         const pathname = usePathname();
         const navItems = [
             { href: '/', label: 'Dashboard', icon: ICONS.dashboard },
+            { href: '/', label: 'Dashboard', icon: ICONS.dashboard },
             { href: '/issues', label: 'Issues', icon: ICONS.issues },
             { href: '/analytics', label: 'Analytics', icon: ICONS.analytics },
         ];
