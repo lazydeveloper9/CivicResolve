@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Review: Civic Issue Reporting System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Background: bg-gray-50, Primary Accent: blue-600, Text: gray-800) -->
+    <!-- Application Structure Plan: A single-page, thematic scrolling layout designed to present a project proposal for the hackathon. The structure guides the user from the problem statement to the proposed solution, its features, technical architecture, and potential impact. An interactive tab system is used for the 'Feature Deep Dive' to allow users to explore different aspects of the system (Citizen App, Admin Dashboard, Tech Stack) without being overwhelmed, making the complex solution easily digestible. This user-flow-oriented structure is better for a proposal than a rigid dashboard layout. -->
+    <!-- Visualization & Content Choices: Problem Statement -> Goal: Inform -> Viz: Text + Icons -> Interaction: None -> Justification: Clearly and quickly communicates the core issue. | Solution Features -> Goal: Organize/Inform -> Viz: Interactive Tabs -> Interaction: Click to change content -> Justification: Segments complex information into manageable chunks. | Admin Analytics -> Goal: Compare/Analyze -> Viz: Bar Chart -> Interaction: Filter chart data by category/status -> Justification: Demonstrates the required analytics feature interactively. -> Library: Chart.js (Canvas). | Tech Architecture -> Goal: Organize -> Viz: HTML/CSS Flowchart -> Interaction: Hover for details -> Justification: Visually explains the system's components without external libraries. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .tab-active {
+            border-color: #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+        .tech-box {
+            transition: all 0.3s ease;
+        }
+        .tech-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                Civic<span class="text-blue-600">Resolve</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#problem" class="text-gray-600 hover:text-blue-600">The Problem</a>
+                <a href="#solution" class="text-gray-600 hover:text-blue-600">Solution</a>
+                <a href="#features" class="text-gray-600 hover:text-blue-600">Features</a>
+                <a href="#impact" class="text-gray-600 hover:text-blue-600">Impact</a>
+                <a href="http://localhost:3000" class="text-gray-600 hover:text-blue-600">AdminPortal</a>
+            </div>
+            <div class="md:hidden">
+                 <button id="menu-btn" class="text-gray-600 focus:outline-none">
+                    <span class="text-3xl">☰</span>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#problem" class="block py-2 px-4 text-sm hover:bg-gray-100">The Problem</a>
+            <a href="#solution" class="block py-2 px-4 text-sm hover:bg-gray-100">Solution</a>
+            <a href="#features" class="block py-2 px-4 text-sm hover:bg-gray-100">Features</a>
+            <a href="#impact" class="block py-2 px-4 text-sm hover:bg-gray-100">Impact</a>
+            <a href="http://localhost:3000" class="block py-2 px-4 text-sm hover:bg-gray-100">Admin Portal</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight">Crowdsourced Civic Issue Reporting and Resolution System</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A project proposal for Smart India Hackathon 2025 to bridge the gap between citizens and municipalities for a cleaner, safer, and more efficient Jharkhand.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="p-6 bg-gray-100 rounded-lg">
+                        <h3 class="text-lg font-semibold text-blue-600">Organization</h3>
+                        <p class="mt-2 text-gray-700">Government of Jharkhand</p>
+                    </div>
+                    <div class="p-6 bg-gray-100 rounded-lg">
+                        <h3 class="text-lg font-semibold text-blue-600">Theme</h3>
+                        <p class="mt-2 text-gray-700">Clean & Green Technology</p>
+                    </div>
+                    <div class="p-6 bg-gray-100 rounded-lg">
+                        <h3 class="text-lg font-semibold text-blue-600">Problem ID</h3>
+                        <p class="mt-2 text-gray-700">25031</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Civic Disconnect</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Municipalities struggle to keep up with everyday civic issues because there's no streamlined way for citizens to report them or for officials to track and manage them effectively.</p>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center text-4xl">🧑</div>
+                        <h3 class="mt-4 font-semibold text-lg">Citizen Reports Issue</h3>
+                        <p class="mt-1 text-gray-600 max-w-xs">Sees a pothole, broken light, or overflowing bin.</p>
+                    </div>
+                    <div class="w-full md:w-auto flex justify-center items-center">
+                        <div class="w-24 border-t-2 border-dashed border-red-400"></div>
+                        <span class="text-red-500 font-bold text-2xl mx-4">!</span>
+                        <div class="w-24 border-t-2 border-dashed border-red-400"></div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center text-4xl">🏢</div>
+                        <h3 class="mt-4 font-semibold text-lg">Municipal Inaction</h3>
+                        <p class="mt-1 text-gray-600 max-w-xs">Lacks awareness or an efficient system to resolve the issue.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Our Solution: A Unified Ecosystem</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">We propose a seamless, integrated platform that empowers citizens and equips municipal staff with the tools they need to create tangible change.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    <div class="tech-box p-6 border rounded-lg h-full">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto">📱</div>
+                        <h3 class="mt-4 font-semibold text-xl">Citizen Mobile App</h3>
+                        <p class="mt-2 text-gray-600">An intuitive mobile-first interface for easy, real-time issue reporting with photos, location, and status tracking.</p>
+                    </div>
+                    <div class="tech-box p-6 border rounded-lg h-full">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-3xl mx-auto">☁️</div>
+                        <h3 class="mt-4 font-semibold text-xl">Scalable Cloud Backend</h3>
+                        <p class="mt-2 text-gray-600">A robust engine to manage data, automatically route tasks, handle high traffic, and provide real-time updates.</p>
+                    </div>
+                    <a href="http://localhost:3000">
+                        <div class="tech-box p-6 border rounded-lg h-full">
+                            <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center text-3xl mx-auto">🖥️</div>
+                                <h3 class="mt-4 font-semibold text-xl">Admin Web Portal</h3>
+                            <p class="mt-2 text-gray-600">A powerful dashboard for municipal staff to view, filter, assign, and manage reports, with built-in analytics.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold">Feature Deep Dive</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Explore the core components of the CivicResolve platform. Click on the tabs below to learn more about each part of our integrated solution.</p>
+                </div>
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                        <button class="tab-btn tab-active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="citizen">Citizen App</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="admin">Admin Dashboard</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="tech">Tech & Architecture</button>
+                    </nav>
+                </div>
+                <div class="mt-8">
+                    <div id="citizen-content" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">Empowering the Community</h3>
+                                <p class="text-gray-600 mb-6">The citizen app is designed for simplicity and speed. Users can report an issue in under a minute, providing all the necessary context for swift action. The entire process, from reporting to resolution, is transparent.</p>
+                                <ul class="space-y-4">
+                                    <li class="flex items-start">
+                                        <span class="text-green-500 mr-3 mt-1">✔</span>
+                                        <div><strong>Effortless Reporting:</strong> Capture issues with a photo, automatic GPS tagging, and an optional text or voice note.</div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-green-500 mr-3 mt-1">✔</span>
+                                        <div><strong>Real-Time Tracking:</strong> Follow the progress of your report from submission to resolution with live status updates.</div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-green-500 mr-3 mt-1">✔</span>
+                                        <div><strong>Push Notifications:</strong> Receive automated alerts for key milestones: report acknowledged, work in progress, and issue resolved.</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-gray-100 p-8 rounded-lg">
+                                <h4 class="font-semibold text-lg text-center mb-6">User Reporting Flow</h4>
+                                <div class="flex items-center justify-between relative">
+                                    <div class="flex flex-col items-center text-center w-1/3">
+                                        <div class="w-16 h-16 bg-blue-500 text-white rounded-full flex items-center justify-center text-2xl">1</div>
+                                        <p class="mt-2 font-medium">Report</p>
+                                    </div>
+                                    <div class="flex-1 border-t-2 border-dashed border-gray-400 absolute top-8 left-0 right-0 -z-10"></div>
+                                    <div class="flex flex-col items-center text-center w-1/3">
+                                        <div class="w-16 h-16 bg-yellow-500 text-white rounded-full flex items-center justify-center text-2xl">2</div>
+                                        <p class="mt-2 font-medium">In Progress</p>
+                                    </div>
+                                    <div class="flex flex-col items-center text-center w-1/3">
+                                        <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl">3</div>
+                                        <p class="mt-2 font-medium">Resolved</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="admin-content" class="tab-content hidden">
+                        <h3 class="text-2xl font-bold mb-4 text-center">Data-Driven Governance</h3>
+                        <p class="text-gray-600 mb-8 text-center max-w-3xl mx-auto">The admin portal is the central command center for municipal operations. It provides staff with a live, interactive map of all reported issues and powerful tools for management and analysis to improve service delivery.</p>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-6">
+                                <span class="font-medium">Filter Analytics:</span>
+                                <div class="flex gap-2">
+                                     <button id="filter-category" class="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700">By Category</button>
+                                     <button id="filter-status" class="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">By Status</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="issuesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tech-content" class="tab-content hidden">
+                        <h3 class="text-2xl font-bold mb-4 text-center">Scalable & Resilient Architecture</h3>
+                        <p class="text-gray-600 mb-12 text-center max-w-3xl mx-auto">Our proposed architecture is built on modern, proven technologies to ensure reliability, scalability, and security. It is designed to handle high volumes of data and concurrent users while remaining responsive.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                            <div class="tech-box p-6 border rounded-lg">
+                                <h4 class="font-semibold text-xl mb-4 text-blue-600">Frontend</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li><strong>Mobile:</strong> React Native / Flutter</li>
+                                    <li><strong>Web Admin:</strong> React / Vue.js</li>
+                                    <li><strong>Styling:</strong> Tailwind CSS</li>
+                                </ul>
+                            </div>
+                            <div class="tech-box p-6 border rounded-lg">
+                                <h4 class="font-semibold text-xl mb-4 text-blue-600">Backend</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li><strong>Server:</strong> Node.js (Express)</li>
+                                    <li><strong>API:</strong> REST / GraphQL</li>
+                                    <li><strong>Real-time:</strong> WebSockets</li>
+                                </ul>
+                            </div>
+                            <div class="tech-box p-6 border rounded-lg">
+                                <h4 class="font-semibold text-xl mb-4 text-blue-600">Infrastructure</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li><strong>Database:</strong> PostgreSQL / MongoDB</li>
+                                    <li><strong>Storage:</strong> AWS S3 / Firebase Storage</li>
+                                    <li><strong>Deployment:</strong> Docker / AWS / Azure</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Projected Impact</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">By implementing this system, we anticipate significant improvements in civic service delivery and community engagement.</p>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6">
+                        <div class="text-5xl font-bold text-blue-600" data-target="50">0</div>
+                        <p class="mt-2 text-gray-600 font-medium">% Faster Issue Resolution</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl font-bold text-blue-600" data-target="75">0</div>
+                        <p class="mt-2 text-gray-600 font-medium">% Increase in Citizen Engagement</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-5xl font-bold text-blue-600" data-target="90">0</div>
+                        <p class="mt-2 text-gray-600 font-medium">% Improvement in Govt. Accountability</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 CivicResolve Project Proposal. For Smart India Hackathon.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => {
+                        item.classList.remove('tab-active');
+                        item.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300', 'border-transparent');
+                    });
+                    tab.classList.add('tab-active');
+                    tab.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300', 'border-transparent');
+
+                    const target = tab.getAttribute('data-tab');
+                    tabContents.forEach(content => {
+                        if (content.id === `${target}-content`) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+
+            const dataByCategory = {
+                labels: ['Potholes', 'Streetlights', 'Trash Bins', 'Water Leakage', 'Parks'],
+                datasets: [{
+                    label: '# of Reports',
+                    data: [120, 190, 80, 50, 95],
+                    backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            const dataByStatus = {
+                labels: ['New', 'In Progress', 'Resolved', 'Closed'],
+                datasets: [{
+                    label: '# of Reports',
+                    data: [55, 110, 320, 50],
+                    backgroundColor: 'rgba(20, 184, 166, 0.8)',
+                    borderColor: 'rgba(20, 184, 166, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            let issuesChart;
+            const ctx = document.getElementById('issuesChart').getContext('2d');
+            
+            function createChart(data) {
+                if (issuesChart) {
+                    issuesChart.destroy();
+                }
+                issuesChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.raw}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            createChart(dataByCategory);
+            
+            const filterCategoryBtn = document.getElementById('filter-category');
+            const filterStatusBtn = document.getElementById('filter-status');
+
+            filterCategoryBtn.addEventListener('click', () => {
+                createChart(dataByCategory);
+                filterCategoryBtn.classList.add('bg-blue-600', 'text-white');
+                filterCategoryBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                filterStatusBtn.classList.remove('bg-blue-600', 'text-white');
+                filterStatusBtn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            filterStatusBtn.addEventListener('click', () => {
+                createChart(dataByStatus);
+                filterStatusBtn.classList.add('bg-blue-600', 'text-white');
+                filterStatusBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                filterCategoryBtn.classList.remove('bg-blue-600', 'text-white');
+                filterCategoryBtn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            const counters = document.querySelectorAll('[data-target]');
+            const speed = 200;
+
+            const animateCounter = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        });
+    </script>
+</body>
+</html>
