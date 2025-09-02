@@ -1,3 +1,16 @@
+# CiviResolve Docs
+## To Contribute in project Fork the Repository 
+
+Then Clone the repository to your local environment 
+
+First To test Edit the ```Contributor.md``` File
+```bash
+Add Your Name to the Contributor.md 
+```
+open source setup done
+### Let's Get Started 
+
+
 # WebAdmin portal 
 To Start Web Admin 
 navigate to ```/Dashboard/webadmin``` directory & open terminal 
