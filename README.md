@@ -1,6 +1,6 @@
 # WebAdmin portal 
 To Start Web Admin 
-navigate to ```/webadmin``` directory & open terminal 
+navigate to ```/Dashboard/webadmin``` directory & open terminal 
 
 
 ## Running Tests
@@ -12,7 +12,7 @@ To run tests, run the following command
 ```
 # Public Portal/file Server
 ## setup
-navigate to ``` /portal``` directory & open terminal
+navigate to ``` /Dashboard/portal``` directory & open terminal
 
 Now Install expressjs
 
